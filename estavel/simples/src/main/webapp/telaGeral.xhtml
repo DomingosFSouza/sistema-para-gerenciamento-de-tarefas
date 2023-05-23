@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+xmlns:h="http://xmlns.jcp.org/jsf/html"
+xmlns:f="http://xmlns.jcp.org/jsf/core"
+xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title>Gerenciamento de tarefas</title>
+<h:outputStylesheet library="css" name="file.css"/>
+</h:head>
+
+<h:body>
+	<h:form id="formPrincipal">
+	<p:tabView style="margin: 0 auto; margin-top: 275px; height: 400px; width: 1200px">
+	<p:tab title="Cadastro">
+		<h:panelGrid columns="1">
+		
+			<h:panelGrid columns="2" style="margin-left: 60px; margin-top: 15px">
+			<p:outputLabel value="Título"/>
+			<p:inputText style="margin-left: 20px; width: 1000px"
+			value="#{tarefaMB.tarefa.titulo}" required="true"/>
+			</h:panelGrid>
+			
+			<h:panelGrid columns="2" style="margin-left: 38px; margin-top: 15px">
+			<p:outputLabel value="Descrição"/>
+			<p:inputTextarea style="margin-left: 20px; width: 1000px"
+			value="#{tarefaMB.tarefa.descricao}" required="true"/>
+			</h:panelGrid>
+			
+			<h:panelGrid columns="4" style="margin-left: 25px; margin-top: 15px">
+			<p:outputLabel value="Responsável"/>
+			<p:selectOneMenu style="margin-left: 20px; width: 250px"
+			value="#{tarefaMB.tarefa.responsaveis}" required="true"
+			filter="true">
+				<f:selectItems value="#{tarefaMB.responsaveis}" var="responsavelDaTarefa"
+				itemValue="#{responsavelDaTarefa}" itemLabel="#{responsavelDaTarefa.responsavel}"/>
+			</p:selectOneMenu>
+			<p:outputLabel value="Prioridade" style="margin-left: 20px"/>
+			<p:selectOneMenu style="margin-left: 20px; width: 250px"
+			value="#{tarefaMB.tarefa.tipoPrioridade}" required="true">
+				<f:selectItems value="#{tarefaMB.prioridades}" var="prioridadeDaTarefa"
+				itemValue="#{prioridadeDaTarefa}" itemLabel="#{prioridadeDaTarefa.prioridade}"/>
+			</p:selectOneMenu>
+			</h:panelGrid>
+			
+			<h:panelGrid columns="2" style="margin-left: 40px; margin-top: 15px">
+			<p:outputLabel value="Deadline"/>
+			<p:calendar style="margin-left: 20px; width: 250px"
+			value="#{tarefaMB.tarefa.deadline}" required="true" />
+			</h:panelGrid>
+			
+			<h:panelGrid style="margin: 0 auto">
+			<p:commandButton value="Cadastrar" action="#{tarefaMB.adicionar}"/>
+			</h:panelGrid>
+		</h:panelGrid>
+		</p:tab>
+		
+		<p:tab title="Listagem">
+		
+		<h:panelGrid columns="1">
+			<h:panelGrid columns="2" style="margin-left: 60px; margin-top: 15px">
+			<p:outputLabel value="Número"/>
+			<p:inputText style="margin-left: 20px; width: 400px"/>
+			</h:panelGrid>
+			
+			<h:panelGrid columns="2" style="margin-left: 20px; margin-top: 15px">
+			<p:outputLabel value="Título/Descrição"/>
+			<p:inputText style="margin-left: 20px; width: 1000px"/>
+			</h:panelGrid>
+			
+			<h:panelGrid columns="5" style="margin-left: 25px; margin-top: 15px">
+			<p:outputLabel value="Responsável"/>
+			<p:selectOneMenu style="margin-left: 20px; width: 250px"
+			value="#{tarefaMB.tarefa.responsaveis}" required="true"
+			filter="true">
+				<f:selectItems value="#{tarefaMB.responsaveis}" var="responsavelDaTarefaListagem"
+				itemValue="#{responsavelDaTarefaListagem}" itemLabel="#{responsavelDaTarefaListagem.responsavel}"/>
+			</p:selectOneMenu>
+			<p:outputLabel value="Situação" style="margin-left: 20px"/>
+			<p:selectOneMenu style="margin-left: 20px; width: 250px"
+			value="#{tarefaMB.tarefa.tipoSituacao}" required="true">
+				<f:selectItems value="#{tarefaMB.situacoes}" var="situacaoDaTarefaListagem"
+				itemValue="#{situacaoDaTarefaListagem}" itemLabel="#{situacaoDaTarefaListagem.situacao}"/>
+			</p:selectOneMenu>
+			<p:commandButton value="Buscar Tarefas" style="margin-left: 20px"/>
+			</h:panelGrid>
+			
+		</h:panelGrid>
+	<p:dataTable id="tabelaTarefas" border="1" paginator="true" rows="8"
+	value="#{tarefaMB.tarefas}" var="t">
+	
+	<p:column headerText="Número">
+		<p:outputLabel value="#{t.id}"/>
+	</p:column>
+	<p:column headerText="Título">
+		<p:outputLabel value="#{t.titulo}"/>
+	</p:column>
+	<p:column headerText="Responsável">
+		<p:outputLabel value="#{t.responsavel}"/>
+	</p:column>
+	<p:column headerText="Ações">
+		<p:commandButton value="Editar" update="@edicaoTarefas" process="@this">
+			<f:setPropertyActionListener value="#{t}" target="#{tarefaMB.tarefa}"/>
+		</p:commandButton>
+		<p:commandButton value="Excluir" action="#{tarefaMB.excluir}" update="@tabelaTarefas" process="@this">
+			<f:setPropertyActionListener value="#{t}" target="#{tarefaMB.tarefa}"/>
+		</p:commandButton>
+		<p:commandButton value="Concluído" action="#{tarefaMB.concluido}" update="@tabelaTarefas" process="@this">
+			<f:setPropertyActionListener value="#{t}" target="#{tarefaMB.tarefa}"/>
+		</p:commandButton>
+	</p:column>
+	
+	</p:dataTable>
+		
+		</p:tab>
+		
+		<p:tab title="Edição">
+		<h:panelGrid id="edicaoTarefas" columns="1">
+		
+			<h:panelGrid columns="2" style="margin-left: 60px; margin-top: 15px">
+			<p:outputLabel value="Título"/>
+			<p:inputText style="margin-left: 20px; width: 1000px"
+			value="#{tarefaMB.tarefa.titulo}" required="true"/>
+			</h:panelGrid>
+			
+			<h:panelGrid columns="2" style="margin-left: 38px; margin-top: 15px">
+			<p:outputLabel value="Descrição"/>
+			<p:inputTextarea style="margin-left: 20px; width: 1000px"
+			value="#{tarefaMB.tarefa.descricao}" required="true"/>
+			</h:panelGrid>
+			
+			<h:panelGrid columns="4" style="margin-left: 25px; margin-top: 15px">
+			<p:outputLabel value="Responsável"/>
+			<p:selectOneMenu style="margin-left: 20px; width: 250px"
+			value="#{tarefaMB.tarefa.responsaveis}" required="true"
+			filter="true">
+				<f:selectItems value="#{tarefaMB.responsaveis}" var="responsavelDaTarefa"
+				itemValue="#{responsavelDaTarefa}" itemLabel="#{responsavelDaTarefa.responsavel}"/>
+			</p:selectOneMenu>
+			<p:outputLabel value="Prioridade" style="margin-left: 20px"/>
+			<p:selectOneMenu style="margin-left: 20px; width: 250px"
+			value="#{tarefaMB.tarefa.tipoPrioridade}" required="true">
+				<f:selectItems value="#{tarefaMB.prioridades}" var="prioridadeDaTarefa"
+				itemValue="#{prioridadeDaTarefa}" itemLabel="#{prioridadeDaTarefa.prioridade}"/>
+			</p:selectOneMenu>
+			</h:panelGrid>
+			
+			<h:panelGrid columns="2" style="margin-left: 40px; margin-top: 15px">
+			<p:outputLabel value="Deadline"/>
+			<p:calendar style="margin-left: 20px; width: 250px"
+			value="#{tarefaMB.tarefa.deadline}" required="true" />
+			
+			</h:panelGrid>
+			
+			
+			<h:panelGrid style="margin: 0 auto">
+			<p:commandButton value="Editar" action="#{tarefaMB.adicionar}" update="tabelaTarefas"/>
+			</h:panelGrid>
+		</h:panelGrid>
+		
+		
+		</p:tab>
+		
+	</p:tabView>
+	</h:form>
+</h:body>
+</html>

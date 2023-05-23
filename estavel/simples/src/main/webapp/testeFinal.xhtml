@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<title>teste</title>
+</h:head>
+<h:body>
+
+	<p:messages autoUpdate="true" closable="true" />
+	<h:form id="form">
+
+		<p:tabView
+			style="margin: 0 auto; margin-top: 275px; height: 400px; width: 1200px">
+			<p:tab title="Cadastro">
+				<h:panelGrid columns="1">
+
+					<h:panelGrid columns="2"
+						style="margin-left: 60px; margin-top: 15px">
+						<p:outputLabel value="Titulo" />
+						<p:inputText value="#{testeMB.teste.titulo}" required="true"
+							style="margin-left: 20px; width: 1000px" />
+					</h:panelGrid>
+
+					<h:panelGrid columns="2"
+						style="margin-left: 38px; margin-top: 15px">
+						<p:outputLabel value="Descrição" />
+						<p:inputTextarea value="#{testeMB.teste.descricao}"
+							style="margin-left: 20px; width: 1000px" />
+					</h:panelGrid>
+
+					<h:panelGrid columns="4"
+						style="margin-left: 25px; margin-top: 15px">
+						<p:outputLabel value="Responsável" />
+						<p:selectOneMenu style="margin-left: 20px; width: 250px"
+							value="#{testeMB.teste.responsavel}" filter="true"
+							required="true">
+							<f:selectItem itemValue="Domingos" itemLabel="Domingos" />
+							<f:selectItem itemValue="Evelin" itemLabel="Evelin" />
+							<f:selectItem itemValue="Fábia" itemLabel="Fábia" />
+							<f:selectItem itemValue="Luiz" itemLabel="Luiz" />
+							<f:selectItem itemValue="João" itemLabel="João" />
+							<f:selectItem itemValue="Maria" itemLabel="Maria" />
+						</p:selectOneMenu>
+						<p:outputLabel value="Prioridade" required="true"
+							style="margin-left: 20px" />
+						<p:selectOneMenu value="#{testeMB.teste.prioridade}" filter="true"
+							style="margin-left: 20px; width: 250px">
+							<f:selectItem itemValue="Alta" itemLabel="Alta" />
+							<f:selectItem itemValue="Média" itemLabel="Média" />
+							<f:selectItem itemValue="Baixa" itemLabel="Baixa" />
+						</p:selectOneMenu>
+					</h:panelGrid>
+
+					<h:panelGrid columns="2"
+						style="margin-left: 40px; margin-top: 15px">
+						<p:outputLabel value="Deadline" />
+						<p:calendar style="margin-left: 20px; width: 250px"
+							value="#{testeMB.teste.deadline}" pattern="dd/MM/yyyy" />
+					</h:panelGrid>
+
+					<h:panelGrid style="margin: 0 auto">
+						<p:commandButton value="Cadastrar" action="#{testeMB.adicionar}"
+							update="form tabelaTarefas" />
+					</h:panelGrid>
+
+				</h:panelGrid>
+			</p:tab>
+			<p:tab title="Listagem">
+
+				<h:panelGrid columns="1">
+					<h:panelGrid columns="2"
+						style="margin-left: 60px; margin-top: 15px">
+						<p:outputLabel value="Número" />
+						<p:inputText style="margin-left: 20px; width: 400px" />
+					</h:panelGrid>
+
+					<h:panelGrid columns="2"
+						style="margin-left: 20px; margin-top: 15px">
+						<p:outputLabel value="Título/Descrição" />
+						<p:inputText style="margin-left: 20px; width: 1000px" />
+					</h:panelGrid>
+
+					<h:panelGrid columns="5"
+						style="margin-left: 25px; margin-top: 15px">
+						<p:outputLabel value="Responsável" />
+						<p:selectOneMenu style="margin-left: 20px; width: 250px"
+							value="#{testeMB.teste.responsavel}" filter="true"
+							required="true">
+							<f:selectItem itemValue="Domingos" itemLabel="Domingos" />
+							<f:selectItem itemValue="Evelin" itemLabel="Evelin" />
+							<f:selectItem itemValue="Fábia" itemLabel="Fábia" />
+							<f:selectItem itemValue="Luiz" itemLabel="Luiz" />
+							<f:selectItem itemValue="João" itemLabel="João" />
+							<f:selectItem itemValue="Maria" itemLabel="Maria" />
+						</p:selectOneMenu>
+						<p:outputLabel value="Situação" required="true"
+							style="margin-left: 20px" />
+						<p:selectOneMenu value="#{testeMB.teste.prioridade}" filter="true"
+							style="margin-left: 20px; width: 250px">
+							<f:selectItem itemValue="Em andamento" itemLabel="Em andamento" />
+							<f:selectItem itemValue="Concluída" itemLabel="Concluída" />
+						</p:selectOneMenu>
+						<p:commandButton value="Buscar Tarefas" style="margin-left: 20px" />
+					</h:panelGrid>
+				</h:panelGrid>
+
+				<p:dataTable id="tabelaTarefas" value="#{testeMB.testes}" var="p"
+					border="1" paginator="true" rows="8">
+					<p:column headerText="Número">#{p.id}</p:column>
+					<p:column headerText="Título">#{p.titulo}</p:column>
+					<p:column headerText="Responsável">#{p.responsavel}</p:column>
+					<p:column headerText="Ações" style="width: 350px">
+
+						<p:commandButton value="Editar"> </p:commandButton>
+						
+						<p:commandButton value="Excluir" action="#{testeMB.excluir}"
+							update="form tabelaTarefas" process="@this">
+							<f:setPropertyActionListener value="#{p}" target="#{testeMB.teste}"></f:setPropertyActionListener>
+						</p:commandButton>
+						<p:commandButton value="Concluída" action="#{testeMB.concluida}"
+							update="form tabelaTarefas" process="@this">
+							<f:setPropertyActionListener value="#{p}" target="#{testeMB.teste}"></f:setPropertyActionListener>
+						</p:commandButton>
+
+					</p:column>
+
+				</p:dataTable>
+			</p:tab>
+
+
+		</p:tabView>
+	</h:form>
+</h:body>
+</html>
