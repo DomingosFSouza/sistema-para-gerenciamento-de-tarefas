@@ -14,6 +14,7 @@ import br.com.simples.model.TipoPrioridade;
 import br.com.simples.model.TipoSituacao;
 //import br.com.simples.utility.Message;
 
+// a ideia desta classe seria usá-la oficialmente, quando o projeto estivesse em estágio mais avançado
 @Named("tarefaMB")
 @SessionScoped
 public class TarefaMB implements Serializable {

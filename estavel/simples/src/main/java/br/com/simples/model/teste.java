@@ -4,10 +4,15 @@ import java.io.Serializable;
 import java.util.Date;
 import java.util.Objects;
 
+//esta classe está sendo utilizada no projeto, porem foi produzida para promover testes no sistema, enquanto a classe "tarefa" seria a oficial.
+
+//criando meu modelo principal. Aqui será construido o objeto e atributos que o compõe
+//o objeto responsável pela criação das tarefas; permitindo nossa manipulação
 public class teste implements Serializable {
 
 private static final long serialVersionUID = 1L;
 
+//a varivael id corresponderá ao "Número" atrelado a tarefa, presente no protótipo e na descrição da atividade
 private Integer id;
 private String titulo;
 private String descricao;

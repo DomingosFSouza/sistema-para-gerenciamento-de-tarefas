@@ -13,6 +13,7 @@ import javax.inject.Named;
 //import java.text.DateFormat;
 //import java.text.SimpleDateFormat;
 
+//esta classe se refere a classe tarefaMB, mas, por precisar promover testes, criei esta para conseguir fazer alguns ajustets para melhorias futuras
 @Named("testeMB")
 @SessionScoped
 public class TesteMB implements Serializable {
@@ -25,8 +26,12 @@ public class TesteMB implements Serializable {
 	@Inject
 	private br.com.simples.model.testeListagem listagem;
 	
+//	lista que corresponde a todas as tarefas salvas
 	private List<br.com.simples.model.teste> testes = new ArrayList<>();
+//	lista que corresponderia as tarefas tragas dentro de uma busca na tela de listagem
 	private List<br.com.simples.model.teste> filtro = new ArrayList<>();
+	
+//	tentativa de construção de um método que pudesse tanto criar quanto editar um objeto Tarefa
 	
 	public String adicionar() {
 //		if(teste.getId()==null) {
@@ -59,6 +64,9 @@ public class TesteMB implements Serializable {
 		return null;
 	}
 	
+	
+//	método construido para conseguir fazer os filtros da tela de listagem
+//	seria preferível buscar fazer a conexão com um banco de dados (postegres) e fazer tais buscas através de suas querys
 	public String filtrando() {
 		List<br.com.simples.model.teste> filtro = new ArrayList<>();
 		br.com.simples.model.teste testeAqui;
@@ -84,7 +92,7 @@ public class TesteMB implements Serializable {
 		}
 		return null;
 	}
-	
+//	editando a dituação de uma tarefa para "Concluída"
 	public String concluida() {
 		teste.setSituacao("Concluída");
 		limpar();

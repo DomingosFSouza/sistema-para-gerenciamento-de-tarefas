@@ -3,6 +3,8 @@ package br.com.simples.model;
 import java.io.Serializable;
 import java.util.Objects;
 
+// a tentativa de produção deste model foi sua implementação na tela de listagem, buscando
+// trazer um objeto diferente do objeto "Tarefa" para pegar os dados inseridos ao fazer o filtro para pesquisa
 public class testeListagem implements Serializable {
 
 private static final long serialVersionUID = 1L;

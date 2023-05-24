@@ -10,7 +10,7 @@
   </properties>
   
   	<dependencies>
-		  
+		  <!-- ajustando minhas dependências a serem utilizadas-->
 		<dependency>
 			<groupId>org.glassfish</groupId>
 			<artifactId>javax.faces</artifactId>
