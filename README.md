@@ -1,7 +1,3 @@
----
-title: Sistema de gerenciamento de tarefas com JSF
----
-
 # **Meu projeto de gerenciamento de tarefas**
 
 O projeto construído conta com um cadastro de tarefas efetivo, tendo como eficiência no tempo de uso do cliente, já que há poucas tarefas, não há requisição de mudança de telas via URLs. Além do cadastro de tarefas, o sistema conta com uma listagem geral de tarefas, com páginação, buscando minimizar a poluição visual; edição parcial, através da funcionalidade "Concluído"; Exclusão de tarefas.
